@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:js_interop';
 import 'dart:ui';
 
 import 'package:clock/clock.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications_platform_interface/flutter_local_notifications_platform_interface.dart';
 import 'package:timezone/timezone.dart';
+import 'package:web/web.dart' as web;
 
 import 'callback_dispatcher.dart';
 import 'helpers.dart';
@@ -25,6 +27,8 @@ import 'platform_specifics/darwin/mappers.dart';
 import 'platform_specifics/darwin/notification_details.dart';
 import 'platform_specifics/darwin/notification_enabled_options.dart';
 import 'platform_specifics/ios/enums.dart';
+import 'platform_specifics/web/models/web_notification_details.dart';
+import 'platform_specifics/web/permission_status.dart';
 import 'typedefs.dart';
 import 'types.dart';
 import 'tz_datetime_mapper.dart';
@@ -101,6 +105,34 @@ class MethodChannelFlutterLocalNotificationsPlugin
                 ))
             .toList() ??
         <ActiveNotification>[];
+  }
+}
+
+/// Web implementation of the local notifications plugin.
+class WebFlutterLocalNotificationsPlugin
+    extends MethodChannelFlutterLocalNotificationsPlugin {
+
+  Future<PermissionStatus> requestPermission() async {
+    final String permissionStatus = (await web.Notification.requestPermission().toDart).toDart;
+
+    if (permissionStatus == 'default'){
+      return PermissionStatus.notAsked;
+    } else if (permissionStatus == 'granted'){
+      return PermissionStatus.granted;
+    } else {
+      return PermissionStatus.denied;
+    }
+  }
+
+  @override
+  Future<void> show(
+      int id,
+      String? title,
+      String? body, {
+        WebNotificationDetails? notificationDetails,
+        String? payload,
+      }) async {
+    web.Notification(title ?? '', web.NotificationOptions(body: body ?? ''));
   }
 }
 

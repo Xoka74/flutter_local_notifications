@@ -27,8 +27,10 @@ class FlutterLocalNotificationsPlugin {
 
   FlutterLocalNotificationsPlugin._() {
     if (kIsWeb) {
-      return;
+      FlutterLocalNotificationsPlatform.instance =
+          WebFlutterLocalNotificationsPlugin();
     }
+
     if (defaultTargetPlatform == TargetPlatform.android) {
       FlutterLocalNotificationsPlatform.instance =
           AndroidFlutterLocalNotificationsPlugin();
@@ -62,8 +64,11 @@ class FlutterLocalNotificationsPlugin {
           'The type argument must be a concrete subclass of '
           'FlutterLocalNotificationsPlatform');
     }
-    if (kIsWeb) {
-      return null;
+    if (kIsWeb  &&
+    T == WebFlutterLocalNotificationsPlugin &&
+    FlutterLocalNotificationsPlatform.instance
+        is WebFlutterLocalNotificationsPlugin) {
+      return FlutterLocalNotificationsPlatform.instance as T?;
     }
 
     if (defaultTargetPlatform == TargetPlatform.android &&
