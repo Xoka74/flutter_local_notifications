@@ -29,6 +29,7 @@ class FlutterLocalNotificationsPlugin {
     if (kIsWeb) {
       FlutterLocalNotificationsPlatform.instance =
           WebFlutterLocalNotificationsPlugin();
+      return;
     }
 
     if (defaultTargetPlatform == TargetPlatform.android) {
