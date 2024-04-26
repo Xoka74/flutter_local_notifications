@@ -17,7 +17,9 @@ class WebFlutterLocalNotificationsPlugin extends FlutterLocalNotificationsPlatfo
     WebNotificationDetails? notificationDetails,
     String? payload,
   }) async {
-    final notification = web.Notification(title ?? 'Title', web.NotificationOptions(body: body ?? 'Body'));
+    final ready = await web.window.navigator.serviceWorker.ready.toDart;
+
+    await ready.showNotification(title ?? '').toDart;
   }
 
   @override
