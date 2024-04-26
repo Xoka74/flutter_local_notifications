@@ -9,6 +9,7 @@ export 'package:flutter_local_notifications_platform_interface/flutter_local_not
         NotificationAppLaunchDetails,
         NotificationResponse,
         NotificationResponseType;
+export 'package:flutter_local_notifications_web/flutter_local_notifications_web.dart';
 
 export 'src/flutter_local_notifications_plugin.dart';
 export 'src/initialization_settings.dart';
