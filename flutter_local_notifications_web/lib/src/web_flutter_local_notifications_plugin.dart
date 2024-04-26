@@ -20,6 +20,7 @@ class WebFlutterLocalNotificationsPlugin extends FlutterLocalNotificationsPlatfo
     final notification = web.Notification(title ?? 'Title', web.NotificationOptions(body: body ?? 'Body'));
   }
 
+  @override
   Future<PermissionStatus> requestPermission() async {
     final String permissionStatus = (await web.Notification.requestPermission().toDart).toDart;
 
