@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications_platform_interface/flutter_local_notifications_platform_interface.dart';
+import 'package:flutter_local_notifications_web/src/models/permission_status.dart';
 import 'package:flutter_local_notifications_web/src/models/web_notification_details.dart';
 
 export 'package:flutter_local_notifications_platform_interface/flutter_local_notifications_platform_interface.dart';
@@ -16,4 +17,6 @@ abstract class FlutterLocalNotificationsPlatformWeb extends FlutterLocalNotifica
     WebNotificationDetails? notificationDetails,
     String? payload,
   });
+
+  Future<PermissionStatus> requestPermission();
 }

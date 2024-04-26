@@ -27,4 +27,10 @@ class WebFlutterLocalNotificationsPlugin extends FlutterLocalNotificationsPlatfo
   }) async {
     assert(false);
   }
+
+  @override
+  Future<PermissionStatus> requestPermission() async {
+    assert(false);
+    return PermissionStatus.denied;
+  }
 }
